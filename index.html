@@ -1,19 +1,32 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luxury Hairs by Nikki</title>
+
 <style>
-body{
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#ffffff,#faf8f3,#f5f1e8);
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ffffff,#faf8f3,#f5f1e8);
 color:#222;
 }
 
 header{
-padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#fff;
 border-bottom:2px solid #D4AF37;
+position:sticky;
+top:0;
 }
 
 .logo{
@@ -23,23 +36,74 @@ color:#C9A227;
 }
 
 nav a{
-margin-right:20px;
 text-decoration:none;
 color:#222;
+margin-left:20px;
 font-weight:bold;
 }
 
 .hero{
-padding:80px 20px;
+padding:120px 20px;
 text-align:center;
+}
+
+.hero h1{
+font-size:55px;
+color:#C9A227;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:20px;
+color:#666;
+margin-bottom:25px;
 }
 
 .btn{
 background:#D4AF37;
 color:white;
-padding:12px 24px;
+padding:14px 30px;
 text-decoration:none;
-border-radius:6px;
+border-radius:8px;
+font-weight:bold;
+}
+
+.section{
+padding:70px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.section h2{
+text-align:center;
+margin-bottom:30px;
+color:#C9A227;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.card h3{
+color:#C9A227;
+margin-bottom:10px;
+}
+
+footer{
+background:#C9A227;
+color:white;
+text-align:center;
+padding:30px;
+margin-top:50px;
 }
 </style>
 </head>
@@ -51,8 +115,8 @@ border-radius:6px;
 
 <nav>
 <a href="#">Home</a>
-<a href="#">Products</a>
-<a href="#">Contact</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
 <a href="admin-login.html">Admin</a>
 </nav>
 </header>
@@ -60,10 +124,63 @@ border-radius:6px;
 <section class="hero">
 <h1>Luxury Hairs by Nikki</h1>
 <p>Premium Luxury & Thrift Hair Collections</p>
-<a href="#" class="btn">Shop Now</a>
+<a href="#products" class="btn">Shop Now</a>
 </section>
+
+<section id="products" class="section">
+<h2>Featured Products</h2>
+
+<div class="products">
+
+<div class="card">
+<h3>Luxury Wigs</h3>
+<p>Premium luxury wig collections.</p>
+</div>
+
+<div class="card">
+<h3>Thrift Hairs</h3>
+<p>Affordable quality hair units.</p>
+</div>
+
+<div class="card">
+<h3>Bundles</h3>
+<p>Luxury human hair bundles.</p>
+</div>
+
+<div class="card">
+<h3>Closures</h3>
+<p>HD lace closures.</p>
+</div>
+
+<div class="card">
+<h3>Frontals</h3>
+<p>Premium frontals.</p>
+</div>
+
+<div class="card">
+<h3>Custom Wigs</h3>
+<p>Professionally customized wig units.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>About Luxury Hairs by Nikki</h2>
+<p style="text-align:center;max-width:800px;margin:auto;">
+We provide premium luxury and thrift hair collections designed to help women look elegant, confident and beautiful.
+</p>
+</section>
+
+<section id="contact" class="section">
+<h2>Contact Us</h2>
+<p style="text-align:center;">WhatsApp: 09032641756</p>
+<p style="text-align:center;">Delta State, Nigeria</p>
+</section>
+
+<footer>
+<p>© 2026 Luxury Hairs by Nikki. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>
-
-
