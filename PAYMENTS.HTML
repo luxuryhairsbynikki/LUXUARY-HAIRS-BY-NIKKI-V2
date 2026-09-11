@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payments - Luxury Hairs by Nikki</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#000,#1a1a1a,#3a2d00);
+color:white;
+padding:30px;
+}
+
+h1{
+color:gold;
+margin-bottom:20px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+color:gold;
+text-decoration:none;
+}
+
+.form-box{
+background:rgba(255,255,255,.08);
+padding:20px;
+border-radius:15px;
+margin-bottom:30px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+}
+
+button{
+background:gold;
+color:black;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:rgba(255,255,255,.08);
+}
+
+th{
+background:gold;
+color:black;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+</style>
+</head>
+
+<body>
+
+<a href="admin-dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>Payments Management</h1>
+
+<div class="form-box">
+
+<input type="text" id="customer" placeholder="Customer Name">
+
+<input type="number" id="amount" placeholder="Amount">
+
+<select id="status">
+<option>Paid</option>
+<option>Pending</option>
+<option>Failed</option>
+</select>
+
+<button onclick="addPayment()">
+Add Payment
+</button>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Customer</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="paymentTable"></tbody>
+
+</table>
+
+<script>
+
+let payments =
+JSON.parse(localStorage.getItem("payments")) || [];
+
+function savePayments(){
+localStorage.setItem(
+"payments",
+JSON.stringify(payments)
+);
+}
+
+function renderPayments(){
+
+const table =
+document.getElementById("paymentTable");
+
+table.innerHTML = "";
+
+payments.forEach(payment => {
+
+table.innerHTML += `
+<tr>
+<td>${payment.customer}</td>
+<td>₦${Number(payment.amount).toLocaleString()}</td>
+<td>${payment.status}</td>
+</tr>
+`;
+
+});
+
+}
+
+function addPayment(){
+
+const customer =
+document.getElementById("customer").value;
+
+const amount =
+document.getElementById("amount").value;
+
+const status =
+document.getElementById("status").value;
+
+if(!customer || !amount){
+alert("Fill all fields");
+return;
+}
+
+payments.push({
+customer,
+amount,
+status
+});
+
+savePayments();
+renderPayments();
+
+document.getElementById("customer").value="";
+document.getElementById("amount").value="";
+}
+
+renderPayments();
+
+</script>
+
+</body>
+</html>
