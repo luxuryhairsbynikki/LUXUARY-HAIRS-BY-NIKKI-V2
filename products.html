@@ -1,76 +1,103 @@
-<script>
+const response =
+await fetch("/api/products",{
 
-let products = JSON.parse(localStorage.getItem("products")) || [];
+method:"DELETE",
 
-function saveProducts() {
-    localStorage.setItem("products", JSON.stringify(products));
-}
+headers:{
+"Content-Type":"application/json"
+},
 
-function renderProducts() {
+body:JSON.stringify({
+id:id
+})
 
-    const table = document.getElementById("productTable");
-    table.innerHTML = "";
+});
 
-    products.forEach((product, index) => {
 
-        table.innerHTML += `
-        <tr>
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>₦${product.price}</td>
-            <td>${product.stock}</td>
-            <td>
-                <button class="delete-btn" onclick="deleteProduct(${index})">
-                    Delete
-                </button>
-            </td>
-        </tr>
-        `;
+const data =
+await response.json();
 
-    });
+
+if(!response.ok){
+
+throw new Error(
+data.error || "Failed to delete product"
+);
 
 }
 
-function addProduct() {
 
-    const name = document.getElementById("name").value.trim();
-    const category = document.getElementById("category").value;
-    const price = document.getElementById("price").value.trim();
-    const stock = document.getElementById("stock").value.trim();
+showMessage(
+"Product deleted successfully.",
+"success"
+);
 
-    if (!name  !price  !stock) {
-        alert("Fill all fields");
-        return;
-    }
 
-    products.push({
-        name: name,
-        category: category,
-        price: price,
-        stock: stock
-    });
-
-    saveProducts();
-    renderProducts();
-
-    document.getElementById("name").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("stock").value = "";
-
-    alert("Product Added Successfully");
-}
-
-function deleteProduct(index) {
-
-    products.splice(index, 1);
-
-    saveProducts();
-    renderProducts();
+await loadProducts();
 
 }
 
-document.getElementById("addBtn").addEventListener("click", addProduct);
+catch(error){
 
-renderProducts();
+showMessage(
+error.message,
+"error"
+);
+
+console.error(error);
+
+}
+
+}
+
+
+function showMessage(text,type){
+
+const message =
+document.getElementById("message");
+
+message.innerText = text;
+
+message.className =
+"message " + type;
+
+message.style.display = "block";
+
+
+setTimeout(() => {
+
+message.style.display = "none";
+
+},4000);
+
+}
+
+
+function escapeHtml(text){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+text;
+
+return div.innerHTML;
+
+}
+
+
+document
+.getElementById("addBtn")
+.addEventListener(
+"click",
+addProduct
+);
+
+
+loadProducts();
 
 </script>
+
+</body>
+
+</html>
