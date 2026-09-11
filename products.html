@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products Management</title>
+
 <style>
 body{
 font-family:Arial,sans-serif;
-padding:20px;
 background:#111;
 color:white;
+padding:20px;
 }
 
-input,select,button{
-display:block;
+h1{
+color:gold;
+margin-bottom:20px;
+}
+
+input,select{
 width:100%;
+padding:12px;
 margin-bottom:10px;
-padding:10px;
+border:none;
+border-radius:5px;
 }
 
 button{
 background:gold;
+color:black;
 border:none;
+padding:12px;
 cursor:pointer;
+font-weight:bold;
+width:100%;
+margin-bottom:20px;
 }
 
 table{
@@ -29,12 +42,26 @@ width:100%;
 border-collapse:collapse;
 }
 
-td,th{
+th{
+background:gold;
+color:black;
 padding:10px;
-border:1px solid #444;
+}
+
+td{
+padding:10px;
+border:1px solid #333;
+}
+
+.delete-btn{
+background:red;
+color:white;
+width:auto;
+padding:8px 12px;
 }
 </style>
 </head>
+
 <body>
 
 <h1>Products Management</h1>
@@ -50,9 +77,10 @@ border:1px solid #444;
 </select>
 
 <input type="number" id="price" placeholder="Price">
-<input type="number" id="stock" placeholder="Stock">
 
-<button onclick="addProduct()">Add Product</button>
+<input type="number" id="stock" placeholder="Stock Quantity">
+
+<button id="addBtn">Add Product</button>
 
 <table>
 <thead>
@@ -64,27 +92,23 @@ border:1px solid #444;
 <th>Action</th>
 </tr>
 </thead>
+
 <tbody id="productTable"></tbody>
 </table>
 
 <script>
 
-let products =
-JSON.parse(localStorage.getItem("products")) || [];
+let products = JSON.parse(localStorage.getItem("products")) || [];
 
 function saveProducts(){
-localStorage.setItem(
-"products",
-JSON.stringify(products)
-);
+localStorage.setItem("products", JSON.stringify(products));
 }
 
 function renderProducts(){
 
-const table =
-document.getElementById("productTable");
+const table = document.getElementById("productTable");
 
-table.innerHTML="";
+table.innerHTML = "";
 
 products.forEach((product,index)=>{
 
@@ -95,7 +119,8 @@ table.innerHTML += `
 <td>₦${product.price}</td>
 <td>${product.stock}</td>
 <td>
-<button onclick="deleteProduct(${index})">
+<button class="delete-btn"
+onclick="deleteProduct(${index})">
 Delete
 </button>
 </td>
@@ -108,17 +133,10 @@ Delete
 
 function addProduct(){
 
-const name =
-document.getElementById("name").value;
-
-const category =
-document.getElementById("category").value;
-
-const price =
-document.getElementById("price").value;
-
-const stock =
-document.getElementById("stock").value;
+const name = document.getElementById("name").value;
+const category = document.getElementById("category").value;
+const price = document.getElementById("price").value;
+const stock = document.getElementById("stock").value;
 
 if(!name  !price  !stock){
 alert("Fill all fields");
@@ -126,10 +144,10 @@ return;
 }
 
 products.push({
-name,
-category,
-price,
-stock
+name:name,
+category:category,
+price:price,
+stock:stock
 });
 
 saveProducts();
@@ -138,6 +156,8 @@ renderProducts();
 document.getElementById("name").value="";
 document.getElementById("price").value="";
 document.getElementById("stock").value="";
+
+alert("Product Added Successfully");
 }
 
 function deleteProduct(index){
@@ -148,6 +168,9 @@ saveProducts();
 renderProducts();
 
 }
+
+document.getElementById("addBtn")
+.addEventListener("click", addProduct);
 
 renderProducts();
 
