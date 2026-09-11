@@ -1,103 +1,242 @@
-const response =
-await fetch("/api/products",{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products Management</title>
 
-method:"DELETE",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-id:id
-})
-
-});
-
-
-const data =
-await response.json();
-
-
-if(!response.ok){
-
-throw new Error(
-data.error || "Failed to delete product"
-);
-
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:white;
+    padding:20px;
 }
 
-
-showMessage(
-"Product deleted successfully.",
-"success"
-);
-
-
-await loadProducts();
-
+h1{
+    color:gold;
+    margin-bottom:20px;
 }
 
-catch(error){
-
-showMessage(
-error.message,
-"error"
-);
-
-console.error(error);
-
+input,select{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:5px;
+    box-sizing:border-box;
 }
 
+button{
+    background:gold;
+    color:black;
+    border:none;
+    padding:12px;
+    cursor:pointer;
+    font-weight:bold;
+    width:100%;
+    margin-bottom:20px;
+    border-radius:5px;
 }
 
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:gold;
+    color:black;
+    padding:10px;
+}
+
+td{
+    padding:10px;
+    border:1px solid #333;
+}
+
+.delete-btn{
+    background:red;
+    color:white;
+    width:auto;
+    padding:8px 12px;
+    margin:0;
+}
+
+.message{
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:5px;
+    display:none;
+}
+
+.success{
+    background:#0f5132;
+}
+
+.error{
+    background:#842029;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Products Management</h1>
+
+<div id="message" class="message"></div>
+
+<input type="text" id="name" placeholder="Product Name">
+
+<select id="category">
+<option>Luxury Wigs</option>
+<option>Thrift Hairs</option>
+<option>Bundles</option>
+<option>Closures</option>
+<option>Frontals</option>
+</select>
+
+<input type="number" id="price" placeholder="Price">
+
+<input type="number" id="stock" placeholder="Stock Quantity">
+
+<button id="addBtn">Add Product</button>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="productTable"></tbody>
+</table>
+
+<script>
+
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function saveProducts(){
+    localStorage.setItem(
+        "products",
+        JSON.stringify(products)
+    );
+}
 
 function showMessage(text,type){
 
-const message =
-document.getElementById("message");
+    const message =
+        document.getElementById("message");
 
-message.innerText = text;
+    message.textContent = text;
+    message.className =
+        "message " + type;
 
-message.className =
-"message " + type;
+    message.style.display = "block";
 
-message.style.display = "block";
-
-
-setTimeout(() => {
-
-message.style.display = "none";
-
-},4000);
-
+    setTimeout(()=>{
+        message.style.display="none";
+    },4000);
 }
 
+function renderProducts(){
 
-function escapeHtml(text){
+    const table =
+        document.getElementById("productTable");
 
-const div =
-document.createElement("div");
+    table.innerHTML = "";
 
-div.textContent =
-text;
+    products.forEach((product,index)=>{
 
-return div.innerHTML;
-
+        table.innerHTML += `
+        <tr>
+            <td>${product.name}</td>
+            <td>${product.category}</td>
+            <td>₦${Number(product.price).toLocaleString()}</td>
+            <td>${product.stock}</td>
+            <td>
+                <button
+                class="delete-btn"
+                onclick="deleteProduct(${index})">
+                Delete
+                </button>
+            </td>
+        </tr>
+        `;
+    });
 }
 
+function addProduct(){
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const price =
+        document.getElementById("price").value;
+
+    const stock =
+        document.getElementById("stock").value;
+
+    if(!name  !price  !stock){
+
+        showMessage(
+            "Please fill all fields",
+            "error"
+        );
+
+        return;
+    }
+
+    products.push({
+        name:name,
+        category:category,
+        price:price,
+        stock:stock
+    });
+
+    saveProducts();
+    renderProducts();
+
+    document.getElementById("name").value="";
+    document.getElementById("price").value="";
+    document.getElementById("stock").value="";
+
+    showMessage(
+        "Product Added Successfully",
+        "success"
+    );
+}
+
+function deleteProduct(index){
+
+    products.splice(index,1);
+
+    saveProducts();
+    renderProducts();
+
+    showMessage(
+        "Product Deleted Successfully",
+        "success"
+    );
+}
 
 document
 .getElementById("addBtn")
 .addEventListener(
-"click",
-addProduct
+    "click",
+    addProduct
 );
 
-
-loadProducts();
+renderProducts();
 
 </script>
 
 </body>
-
 </html>
