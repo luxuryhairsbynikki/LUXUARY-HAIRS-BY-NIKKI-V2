@@ -1,100 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>(
+<html>
+<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Products - Luxury Hairs by Nikki</title>
-
+<title>Products</title>
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
 body{
-background:linear-gradient(135deg,#000,#1a1a1a,#3a2d00);
-color:white;
-
-h1{
-color:gold;
-margin-bottom:20px;
-}
-
-.form-box{
-background:rgba(255,255,255,.08);
+font-family:Arial,sans-serif;
 padding:20px;
-border-radius:15px;
-margin-bottom:30px;
+background:#111;
+color:white;
 }
 
-input,select{
+input,select,button{
+display:block;
 width:100%;
-padding:12px;
 margin-bottom:10px;
-border:none;
-border-radius:8px;
+padding:10px;
 }
 
 button{
 background:gold;
-color:black;
 border:none;
-padding:12px 20px;
-border-radius:8px;
-font-weight:bold;
 cursor:pointer;
 }
 
 table{
 width:100%;
 border-collapse:collapse;
-background:rgba(255,255,255,.08);
-border-radius:10px;
-overflow:hidden;
 }
 
-th{
-background:gold;
-color:black;
-padding:12px;
+td,th{
+padding:10px;
+border:1px solid #444;
 }
-
-td{
-padding:12px;
-border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.delete-btn{
-background:red;
-color:white;
-padding:8px 12px;
-border:none;
-border-radius:5px;
-cursor:pointer;
-}
-
-.back{
-display:inline-block;
-margin-bottom:20px;
-color:gold;
-text-decoration:none;
-}
-
 </style>
 </head>
-
 <body>
 
-<a href="admin-dashboard.html" class="back">
-← Back to Dashboard
-</a>
-
 <h1>Products Management</h1>
-
-<div class="form-box">
 
 <input type="text" id="name" placeholder="Product Name">
 
@@ -107,17 +50,11 @@ text-decoration:none;
 </select>
 
 <input type="number" id="price" placeholder="Price">
+<input type="number" id="stock" placeholder="Stock">
 
-<input type="number" id="stock" placeholder="Stock Quantity">
-
-<button onclick="addProduct()">
-Add Product
-</button>
-
-</div>
+<button onclick="addProduct()">Add Product</button>
 
 <table>
-
 <thead>
 <tr>
 <th>Name</th>
@@ -127,9 +64,7 @@ Add Product
 <th>Action</th>
 </tr>
 </thead>
-
 <tbody id="productTable"></tbody>
-
 </table>
 
 <script>
@@ -149,7 +84,7 @@ function renderProducts(){
 const table =
 document.getElementById("productTable");
 
-table.innerHTML = "";
+table.innerHTML="";
 
 products.forEach((product,index)=>{
 
@@ -160,9 +95,7 @@ table.innerHTML += `
 <td>₦${product.price}</td>
 <td>${product.stock}</td>
 <td>
-<button
-class="delete-btn"
-onclick="deleteProduct(${index})">
+<button onclick="deleteProduct(${index})">
 Delete
 </button>
 </td>
@@ -201,19 +134,18 @@ stock
 
 saveProducts();
 renderProducts();
-"stock").value="";
+
+document.getElementById("name").value="";
+document.getElementById("price").value="";
+document.getElementById("stock").value="";
 }
 
 function deleteProduct(index){
-
-if(confirm("Delete product?")){
 
 products.splice(index,1);
 
 saveProducts();
 renderProducts();
-
-}
 
 }
 
@@ -223,3 +155,5 @@ renderProducts();
 
 </body>
 </html>
+
+
