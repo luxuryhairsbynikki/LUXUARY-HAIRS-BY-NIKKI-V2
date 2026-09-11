@@ -184,7 +184,7 @@ function addProduct(){
     const stock =
         document.getElementById("stock").value;
 
-    if(!name  !price  !stock){
+    if(!name || !price  !stock){
 
         showMessage(
             "Please fill all fields",
