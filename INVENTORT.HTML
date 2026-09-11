@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory - Luxury Hairs by Nikki</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#000,#1a1a1a,#3a2d00);
+color:white;
+padding:30px;
+}
+
+h1{
+color:gold;
+margin-bottom:20px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+color:gold;
+text-decoration:none;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:rgba(255,255,255,.08);
+border-radius:10px;
+overflow:hidden;
+}
+
+th{
+background:gold;
+color:black;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.low-stock{
+color:#ff4d4d;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<a href="admin-dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>Inventory Management</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="inventoryTable"></tbody>
+
+</table>
+
+<script>
+
+let products =
+JSON.parse(localStorage.getItem("products")) || [];
+
+const table =
+document.getElementById("inventoryTable");
+
+function renderInventory(){
+
+table.innerHTML = "";
+
+products.forEach(product => {
+
+const status =
+Number(product.stock) <= 3
+? '<span class="low-stock">Low Stock</span>'
+: 'In Stock';
+
+table.innerHTML += `
+<tr>
+<td>${product.name}</td>
+<td>${product.category}</td>
+<td>₦${Number(product.price).toLocaleString()}</td>
+<td>${product.stock}</td>
+<td>${status}</td>
+</tr>
+`;
+
+});
+
+}
+
+renderInventory();
+
+</script>
+
+</body>
+</html>
