@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customers - Luxury Hairs by Nikki</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#000,#1a1a1a,#3a2d00);
+color:white;
+padding:30px;
+}
+
+h1{
+color:gold;
+margin-bottom:20px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+color:gold;
+text-decoration:none;
+}
+
+.form-box{
+background:rgba(255,255,255,.08);
+padding:20px;
+border-radius:15px;
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border:none;
+border-radius:8px;
+}
+
+button{
+background:gold;
+color:black;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:rgba(255,255,255,.08);
+}
+
+th{
+background:gold;
+color:black;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.delete-btn{
+background:red;
+color:white;
+padding:8px 12px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<a href="admin-dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>Customers Management</h1>
+
+<div class="form-box">
+
+<input type="text" id="customerName" placeholder="Customer Name">
+
+<input type="email" id="customerEmail" placeholder="Customer Email">
+
+<input type="text" id="customerPhone" placeholder="Customer Phone">
+
+<button onclick="addCustomer()">
+Add Customer
+</button>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="customerTable"></tbody>
+
+</table>
+
+<script>
+
+let customers =
+JSON.parse(localStorage.getItem("customers")) || [];
+
+function saveCustomers(){
+localStorage.setItem(
+"customers",
+JSON.stringify(customers)
+);
+}
+
+function renderCustomers(){
+
+const table =
+document.getElementById("customerTable");
+
+table.innerHTML = "";
+
+customers.forEach((customer,index)=>{
+
+table.innerHTML += `
+<tr>
+<td>${customer.name}</td>
+<td>${customer.email}</td>
+<td>${customer.phone}</td>
+<td>
+<button
+class="delete-btn"
+onclick="deleteCustomer(${index})">
+Delete
+</button>
+</td>
+</tr>
+`;
+
+});
+
+}
+
+function addCustomer(){
+
+const name =
+document.getElementById("customerName").value;
+
+const email =
+document.getElementById("customerEmail").value;
+
+const phone =
+document.getElementById("customerPhone").value;
+
+if(!name  !email  !phone){
+alert("Fill all fields");
+return;
+}
+
+customers.push({
+name,
+email,
+phone
+});
+
+saveCustomers();
+renderCustomers();
+
+document.getElementById("customerName").value="";
+document.getElementById("customerEmail").value="";
+document.getElementById("customerPhone").value="";
+}
+
+function deleteCustomer(index){
+
+if(confirm("Delete customer?")){
+
+customers.splice(index,1);
+
+saveCustomers();
+renderCustomers();
+
+}
+
+}
+
+renderCustomers();
+
+</script>
+
+</body>
+</html>
