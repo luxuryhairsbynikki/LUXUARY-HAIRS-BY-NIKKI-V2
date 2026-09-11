@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orders - Luxury Hairs by Nikki</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#000,#1a1a1a,#3a2d00);
+color:white;
+padding:30px;
+}
+
+h1{
+color:gold;
+margin-bottom:20px;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+color:gold;
+text-decoration:none;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:rgba(255,255,255,.08);
+}
+
+th{
+background:gold;
+color:black;
+padding:12px;
+}
+
+td{
+padding:12px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.status{
+padding:6px 10px;
+border-radius:5px;
+background:green;
+}
+</style>
+</head>
+
+<body>
+
+<a href="admin-dashboard.html" class="back">
+← Back to Dashboard
+</a>
+
+<h1>Orders Management</h1>
+
+<table>
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Product</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="ordersTable"></tbody>
+
+</table>
+
+<script>
+
+let orders =
+JSON.parse(localStorage.getItem("orders")) || [];
+
+const table =
+document.getElementById("ordersTable");
+
+function renderOrders(){
+
+table.innerHTML = "";
+
+orders.forEach(order=>{
+
+table.innerHTML += `
+<tr>
+<td>${order.id}</td>
+<td>${order.customer}</td>
+<td>${order.product}</td>
+<td>₦${Number(order.amount).toLocaleString()}</td>
+<td><span class="status">${order.status}</span></td>
+</tr>
+`;
+
+});
+
+}
+
+renderOrders();
+
+</script>
+
+</body>
+</html>
