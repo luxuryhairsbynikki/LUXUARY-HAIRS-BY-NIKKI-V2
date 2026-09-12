@@ -1,7 +1,7 @@
 export default async function handler(req, res) { const token = process.env.AIRTABLE_TOKEN; const baseId = process.env.AIRTABLE_BASE_ID; const tableName = process.env.AIRTABLE_TABLE_NAME || "Products";
 if (!token || !baseId) { return res.status(500).json({ error: "Airtable environment variables are missing." }); }
-const airtableUrl = https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)};
-const headers = { Authorization: Bearer ${token}, "Content-Type": "application/json" };
+const airtableUrl= `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`;
+const headers = { Authorization:`Bearer ${token}`, "Content-Type": "application/json" };
 try {
 // GET PRODUCTS
 if (req.method === "GET") {
