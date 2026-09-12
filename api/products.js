@@ -13,8 +13,7 @@ if (req.method === "GET") {
 
   const data = await response.json();
 
-  const products = (data.records || []).map(record => ({
-    id: record.id,
+  const products = (data.records || []).map(...)
     name: record.fields.Name || "",
     category: record.fields.Category || "",
     price: record.fields.Price || 0,
