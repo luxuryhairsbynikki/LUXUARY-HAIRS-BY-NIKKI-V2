@@ -3,6 +3,7 @@ if (!token || !baseId) { return res.status(500).json({ error: "Airtable environm
 const airtableUrl = https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)};
 const headers = { Authorization: Bearer ${token}, "Content-Type": "application/json" };
 try {
+// GET PRODUCTS
 if (req.method === "GET") {
 
   const response = await fetch(airtableUrl, {
@@ -23,6 +24,7 @@ if (req.method === "GET") {
   return res.status(200).json(products);
 }
 
+// ADD PRODUCT
 if (req.method === "POST") {
 
   const { name, category, price, stock } = req.body;
@@ -49,6 +51,7 @@ if (req.method === "POST") {
   return res.status(201).json(data);
 }
 
+// DELETE PRODUCT
 if (req.method === "DELETE") {
 
   const { id } = req.body;
